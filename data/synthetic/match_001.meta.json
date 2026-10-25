@@ -1,0 +1,24 @@
+{
+  "away_goals": 0,
+  "away_team": "Ridgeway Athletic",
+  "competition": "Synthetic Friendly",
+  "data_version": "synthetic-demo-v1",
+  "event_count": 488,
+  "final_third_x": 66.0,
+  "home_goals": 3,
+  "home_team": "Harbour Rovers",
+  "match_id": "MATCH-001",
+  "penalty_area_x": 83.0,
+  "scenario_markers": [
+    "control:HOME:1-20",
+    "control:AWAY:26-40",
+    "counter:HOME:47-49",
+    "hero:HOME:52-56",
+    "control:HOME:55-68",
+    "counter:HOME:70-72",
+    "breakdown:AWAY:74-79",
+    "control:HOME:81-88"
+  ],
+  "seed": 20261023,
+  "stages_completed": 5
+}

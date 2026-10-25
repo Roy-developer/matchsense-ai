@@ -218,3 +218,13 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+# Logs and local scratch
+*.log
+*.err
+_*.png
+.vscode/
+
+# Generated match artefacts stay in the repo (deterministic demo data),
+# but local caches do not.
+.ruff_cache/
+.pytest_cache/
