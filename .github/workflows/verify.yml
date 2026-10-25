@@ -1,0 +1,110 @@
+name: verify
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: verify-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: Tests (Python 3.11)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Generate the deterministic match
+        run: python -m scripts.generate_match
+
+      - name: Determinism check
+        run: |
+          cp data/synthetic/match_001.jsonl /tmp/a.jsonl
+          python -m scripts.generate_match > /dev/null
+          cmp /tmp/a.jsonl data/synthetic/match_001.jsonl
+          echo "same seed produced a byte-identical match"
+
+      - name: Run tests
+        run: python -m pytest -q
+
+      - name: Vertical slice
+        run: python -m scripts.run_demo | head -20
+
+      - name: API smoke test
+        run: python -m scripts.api_smoke
+
+  docker:
+    name: Docker build and run
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: docker/setup-buildx-action@v3
+
+      - name: Build image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: false
+          load: true
+          tags: matchsense-ai:ci
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Image runs as non-root
+        run: |
+          user=$(docker run --rm --entrypoint id matchsense-ai:ci -un)
+          echo "container user: $user"
+          test "$user" != "root"
+
+      - name: API container health check
+        run: |
+          docker run -d --name matchsense-api -p 8000:8000 matchsense-ai:ci
+          for i in $(seq 1 30); do
+            if curl -sf http://127.0.0.1:8000/health; then
+              echo ""
+              echo "health endpoint responded"
+              exit 0
+            fi
+            sleep 2
+          done
+          echo "health endpoint did not respond"
+          docker logs matchsense-api
+          exit 1
+
+      - name: Dashboard container responds
+        run: |
+          docker run -d --name matchsense-ui -p 8501:8501 matchsense-ai:ci \
+            streamlit run src/ui/app.py --server.address 0.0.0.0 --server.port 8501
+          for i in $(seq 1 45); do
+            if curl -sf http://127.0.0.1:8501/healthz; then
+              echo ""
+              echo "dashboard responded"
+              exit 0
+            fi
+            sleep 2
+          done
+          echo "dashboard did not respond"
+          docker logs matchsense-ui
+          exit 1
+
+      - name: Teardown
+        if: always()
+        run: docker rm -f matchsense-api matchsense-ui || true
+
+      - name: Dump logs on failure
+        if: failure()
+        run: docker logs matchsense-api 2>&1 || true
