@@ -1,0 +1,17 @@
+Welcome to MatchSense. This is a live dashboard walkthrough using a fictional, fixed-seed match, not a live fixture.
+
+The overview shows Harbour Rovers leading Ridgeway Athletic three-nil, with 488 events processed and seven approved detections. The momentum timeline compares control scores in five-minute windows.
+
+I open event volume to inspect the source activity. A change in control is a reason to investigate, not proof of a tactical cause.
+
+Here is the approved Harbour Rovers insight for minutes fifty-five to sixty: the control score rises from point five-nine to point seven-four. The Evidence Receipt links observed events to derived metrics, then the interpreted claim and Critic decision.
+
+The same verified claim has fan, analyst, and broadcast presentations. The wording adapts; its evidence stays fixed.
+
+The Critic blocks a formation claim because formations are absent from the event data.
+
+It also blocks invented possession and shot totals, plus a fatigue claim that this feed cannot observe.
+
+Finally, the forty-to-forty-five-minute Ridgeway Athletic window is approved. Its claim reads three independent signals moving together, built from shots, threat, and recoveries, and all seven detections pass verification.
+
+The current MVP includes event validation, rolling metrics, control-shift detection, receipts, verification, audience styles, an API, and this dashboard. Other detector types remain roadmap work. Follow the events, check the calculation, then review the claim. All match data is synthetic. Thanks for watching.
