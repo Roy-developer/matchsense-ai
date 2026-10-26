@@ -1,0 +1,58 @@
+WEBVTT
+
+00:00:00.100 --> 00:00:02.240
+Welcome to MatchSense.
+
+00:00:02.190 --> 00:00:08.131
+This is a live dashboard walkthrough using a fictional, fixed-seed match, not a live fixture.
+
+00:00:08.131 --> 00:00:16.607
+The overview shows Harbour Rovers leading Ridgeway Athletic three-nil, with 488 events processed and seven approved detections.
+
+00:00:16.607 --> 00:00:21.155
+The momentum timeline compares control scores in five-minute windows.
+
+00:00:21.155 --> 00:00:24.810
+I open event volume to inspect the source activity.
+
+00:00:24.810 --> 00:00:30.095
+A change in control is a reason to investigate, not proof of a tactical cause.
+
+00:00:30.095 --> 00:00:38.595
+Here is the approved Harbour Rovers insight for minutes fifty-five to sixty: the control score rises from point five-nine to point seven-four.
+
+00:00:38.595 --> 00:00:45.179
+The Evidence Receipt links observed events to derived metrics, then the interpreted claim and Critic decision.
+
+00:00:45.179 --> 00:00:50.512
+The same verified claim has fan, analyst, and broadcast presentations.
+
+00:00:50.512 --> 00:00:54.000
+The wording adapts; its evidence stays fixed.
+
+00:00:54.000 --> 00:00:59.179
+The Critic blocks a formation claim because formations are absent from the event data.
+
+00:00:59.179 --> 00:01:05.464
+It also blocks invented possession and shot totals, plus a fatigue claim that this feed cannot observe.
+
+00:01:05.464 --> 00:01:10.381
+Finally, the forty-to-forty-five-minute Ridgeway Athletic window is approved.
+
+00:01:10.381 --> 00:01:19.464
+Its claim reads three independent signals moving together, built from shots, threat, and recoveries, and all seven detections pass verification.
+
+00:01:19.464 --> 00:01:30.095
+The current MVP includes event validation, rolling metrics, control-shift detection, receipts, verification, audience styles, an API, and this dashboard.
+
+00:01:30.095 --> 00:01:33.262
+Other detector types remain roadmap work.
+
+00:01:33.262 --> 00:01:37.595
+Follow the events, check the calculation, then review the claim.
+
+00:01:37.595 --> 00:01:40.060
+All match data is synthetic.
+
+00:01:40.060 --> 00:01:41.869
+Thanks for watching.
