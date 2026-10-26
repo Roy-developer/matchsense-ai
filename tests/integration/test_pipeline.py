@@ -90,6 +90,25 @@ def test_critic_rejects_invented_numbers():
     assert any("unsupported number" in reason for reason in result.reasons)
 
 
+def test_critic_approves_grounded_triggered_signal_count():
+    records, meta = build_match()
+    events = [Event(**record) for record in records]
+    run = run_pipeline(events, meta)
+    bundle = next(
+        insight.bundle for insight in run.insights if insight.bundle.window_start_minute == 40
+    )
+
+    claim = (
+        "Away side took control between 40-45 minutes with shots appearing "
+        "where there was none and 3 independent signals moving together"
+    )
+    verified, result = resolve_claim(bundle, claim, "Several derived indicators support the shift.")
+
+    assert len(bundle.detector.triggered_signals) == 3
+    assert verified is not None
+    assert result.accepted
+
+
 def test_unapproved_claim_cannot_be_narrated():
     records, meta = build_match()
     events = [Event(**record) for record in records]

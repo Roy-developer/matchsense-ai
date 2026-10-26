@@ -13,6 +13,7 @@ from src.models.insight import EvidenceBundle
 from src.narrative.prompts import BLOCKED_PHRASES
 
 NUMBER_PATTERN = re.compile(r"\d+(?:\.\d+)?")
+SIGNAL_COUNT_PATTERN = re.compile(r"(\d+(?:\.\d+)?)\s+(?:independent\s+)?signals?\b")
 
 
 class CritiqueResult:
@@ -71,8 +72,13 @@ def critique(bundle: EvidenceBundle, claim: str, significance: str) -> CritiqueR
             reasons.append(f"unsupported context: '{phrase}' is not in the event data")
 
     allowed = _available_numbers(bundle)
+    grounded_signal_counts = {
+        float(match.group(1))
+        for match in SIGNAL_COUNT_PATTERN.finditer(text)
+        if float(match.group(1)) == len(bundle.detector.triggered_signals)
+    }
     for number in _numbers_in(text):
-        if not _is_supported(number, allowed):
+        if number not in grounded_signal_counts and not _is_supported(number, allowed):
             reasons.append(f"unsupported number: {number:g} does not appear in the evidence")
 
     if not bundle.detector.triggered_signals:

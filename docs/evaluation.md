@@ -20,7 +20,7 @@
 pytest -q
 ```
 
-Current status: **77 tests passing.**
+Current status: **78 tests passing.**
 
 ## Golden behaviour
 
